@@ -43,7 +43,10 @@ p{
     background-color: hsl(357, 97%, 46%);
 }
 #returnFromBreak{
-    background-color: white; margin-left: 4%;
-    padding: 0px;height: 35px;
+    background-color: white;
+    margin-left: 4%;
+    padding: 6px;
+    height: 37px;
     text-align: center;
+    align-items: center;
 }
