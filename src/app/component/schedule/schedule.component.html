@@ -1,0 +1,50 @@
+
+<ejs-schedule [eventSettings]="eventObject" (created)="initDataSource()" (dataBinding)="eventBinding(eventObject)" #scheduleObj>
+    <ng-template #editorTemplate let-data>
+        <table *ngIf="data != undefined" class="custom-event-editor" width="100%" cellpadding="5">
+            <tbody>
+                <tr>
+                    <td class="e-textlabel">Summary</td>
+                    <td colspan="4">
+                        <input id="Subject" [disabled]="isTechnician" class="e-field e-input" type="text" value="{{data.Subject}}" data-name="Subject" style="width: 100%"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="e-textlabel">Technician</td>
+                    <td colspan="4">
+                        <ejs-dropdownlist id="Technician" [readonly]="isTechnician" class="e-field" data-name="Technician" placeholder="Choose technician"
+                            [dataSource]="TechnicianData" [fields]="technicianFields" [value]="data.Technician"></ejs-dropdownlist>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="e-textlabel">State</td>
+                    <td colspan="4">
+                        <ejs-dropdownlist id="State" class="e-field" data-name="State" placeholder="Choose state"
+                            [dataSource]="ScheduleStagesData" [fields]="scheduleStagesFields" [value]="data.State"></ejs-dropdownlist>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="e-textlabel">From</td>
+                    <td colspan="4">
+                        <ejs-datetimepicker [readonly]="isTechnician" id="StartTime" class="e-field" data-name="StartTime" format="dd/MM/yy h:mm a"
+                          [value]="data.StartTime"></ejs-datetimepicker>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="e-textlabel">To</td>
+                    <td colspan="4">
+                        <ejs-datetimepicker [readonly]="isTechnician" id="EndTime" class="e-field" data-name="EndTime" format="dd/MM/yy h:mm a"
+                        [value]="data.EndTime"></ejs-datetimepicker>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="e-textlabel">Description</td>
+                    <td colspan="4">
+                        <textarea id="Description" [readonly]="isTechnician" class="e-field e-input" data-name="Description" rows="3" cols="50"
+                        value="{{data.Description}}" style="width: 100%; height: 60px !important; resize: vertical"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-template>
+</ejs-schedule>

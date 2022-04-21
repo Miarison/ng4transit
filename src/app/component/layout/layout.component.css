@@ -1,0 +1,28 @@
+.main_logo{
+    width: 190px;
+}
+
+mat-sidenav-container {
+    height: 100%;
+}
+mat-nav-list mat-list-item{
+    color: white;
+}
+mat-nav-list mat-list-item{
+    color: white;
+}
+mat-sidenav{
+    background-color: rgb(0, 0, 0);
+    width: 200px;
+    color: white;
+    border-right: 5px solid red
+}
+
+mat-sidenav-content > header{
+    background-color: black;
+    padding: 15px;
+    color: white
+}
+.list-over{
+    background-color: rgba(255, 0, 0, 0.712)
+}

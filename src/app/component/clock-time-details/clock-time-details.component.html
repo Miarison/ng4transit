@@ -1,0 +1,34 @@
+<h3>details</h3>
+<div class="position-block">
+  <div class="col-md-6">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Clock</th>
+          <th>Work Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detail of detailData">
+          <td *ngIf=" detail.name ===  name ">{{detail.clockTime}}</td>
+          <td *ngIf=" detail.name ===  name ">{{detail.timeClock}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class=" col-md-2">
+    <table class="table">
+       <thead>
+        <tr>
+          <th> details </th>
+         </tr>
+       </thead>
+       <tbody class="card-body">
+           <tr>
+             <td>00:00:00</td>
+           </tr>
+       </tbody>
+    
+    </table>
+  </div>
+</div> 

@@ -1,0 +1,32 @@
+<div style="margin-top:5%">
+    <mat-card class="form-container">
+        <mat-toolbar>
+            <img src="../assets/img/4Transit-Logo.png"/>
+        </mat-toolbar>
+        <mat-card-content>
+            <form (ngSubmit)="onSubmit(signinForm)" #signinForm="ngForm">
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>e-mail</mat-label>
+                        <input type="email" name="email" matInput placeholder="Your e-mail" autofocus ngModel required>
+                        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Your password</mat-label>
+                        <input name="password" matInput [type]="hide ? 'password' : 'text'" ngModel required>
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <button mat-flat-button type="submit" color="primary"><span class="first-letter">L</span>ogin</button>
+                </p>
+                <p><a href="#">Forgot password?</a></p>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

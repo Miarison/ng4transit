@@ -1,0 +1,21 @@
+<app-clock-time-details *ngIf="isDetailComponent" [detailData] ="detailClockTime" [name]="name" [timeworked]="timeWorkedDetail"> 
+</app-clock-time-details>
+<div class="col-md-9" *ngIf="isNameClicked">
+  <h3>Activity</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">User Name</th>
+        <th scope="col">Work Date</th>
+        <th scope="col">Time Worked</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor=" let data of data">
+        <td> <a [routerLink] =""  (click)="getDetailClockTimeByName(data.name)"> {{data.name }}</a></td>
+        <td>{{data.timeClock}}</td>
+        <td><p>00:00</p></td>
+      </tr>
+    </tbody>
+  </table>
+</div> 

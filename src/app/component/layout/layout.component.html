@@ -1,0 +1,137 @@
+
+<app-login *ngIf="!isAuthenticated"></app-login>
+<mat-sidenav-container *ngIf="isAuthenticated">
+    <mat-sidenav #sidenav mode="side" opened>
+        <header>
+            <img src="../assets/img/4Transit-Logo.png" class="main_logo"/>
+        </header>
+        <mat-nav-list>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>schedule</mat-icon>
+                    </button>
+                    <a routerLink="schedules" matLine>
+                        Schedules
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>dashboard</mat-icon>
+                    </button>
+                    <a routerLink="dashboard" matLine>
+                        Dashboard
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>perm_identity</mat-icon>
+                    </button>
+                    <a routerLink="profile" matLine>
+                        Profile
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>fact_check</mat-icon>
+                    </button>
+                    <a routerLink="timeSheets" matLine>
+                        Time sheets
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>fact_check</mat-icon>
+                    </button>
+                    <a routerLink="clockTime" matLine>
+                        Clock Time
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>assignment</mat-icon>
+                    </button>
+                    <a routerLink="information" matLine>
+                        Information
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>history</mat-icon>
+                    </button>
+                    <a routerLink="workHistory" matLine>
+                        Work History
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>reorder</mat-icon>
+                    </button>
+                    <a routerLink="workOrder" matLine>
+                        Work order
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>timeline</mat-icon>
+                    </button>
+                    <a routerLink="performance" matLine>
+                        Performance
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>work</mat-icon>
+                    </button>
+                    <a routerLink="email" matLine>
+                        Email
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>message</mat-icon>
+                    </button>
+                    <a routerLink="message" matLine>
+                        Message
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>account_circle</mat-icon>
+                    </button>
+                    <account routerLink="account" matLine>
+                        Account
+                    </account>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>payment</mat-icon>
+                    </button>
+                    <a routerLink="payroll" matLine>
+                        Payroll
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>app_registration</mat-icon>
+                    </button>
+                    <a routerLink="register" matLine>
+                        Register
+                    </a>
+                </mat-list-item>
+                <mat-list-item>
+                    <button mat-icon-button>
+                        <mat-icon>logout</mat-icon>
+                    </button>
+                    <a routerLink="logout" matLine>
+                        Logout
+                    </a>
+                </mat-list-item>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <header>
+            <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+        </header>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
