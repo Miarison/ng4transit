@@ -9,7 +9,7 @@ import { TimeLock } from 'src/app/model/time-lock';
 export class ClockTimeDetailsComponent implements OnInit {
   @Input() detailData: TimeLock [] = [];
   @Input() name: string | undefined;
-  @Input() timeworked: string| undefined;
+  @Input() timeworked: number| undefined;
 
   constructor() { }
 

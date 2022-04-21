@@ -13,7 +13,7 @@ export class ClockTimeComponent implements OnInit {
   donneee : TimeLock[] = [];
   detailClockTime:TimeLock [] = [];
   name: string | undefined;
-  timeWorkedDetail: string | undefined;
+  timeWorkedDetail: any;
   isDetailComponent = false;
   isNameClicked = true;
   isClockIn = false;
@@ -44,61 +44,84 @@ export class ClockTimeComponent implements OnInit {
       }
       return this.data;
    }
-  getDetailClockTimeByName(name?:string){
-    for(let i = 0; i <this.donneee.length; i++){ 
+   getDetailClockTimeByName(name?:string){
+    let dateIn: any;
+    let dateOut: any;
+    let dateLeave: any;
+    let dateReturn: any;
+    
+    for(let i = 0; i <this.donneee.length; i++){          
          if(this.donneee[i].name === name ){
+
             this.name = name;
             this.isDetailComponent = true;
             this.isNameClicked = false;
             this.detailClockTime.push(new TimeLock(this.donneee[i].name,this.donneee[i].clockTime,this.donneee[i].timeClock));
-            if(this.donneee[i].clockTime == 'clock in'){
-              const dateClockIn = this.donneee[i].timeClock;              
-              let dateClock = new Date(dateClockIn as string);
-              let nouveaDate = this.convertStringToDate(dateClockIn as string);
-              console.log(nouveaDate);
-              
-              //test date 
-              // var t1 = new Date();
-              // var t2 = new Date();
-              // let autredateString ='2022-04-20T20:00:00'
-              // let newAutreDate = new Date(autredateString);
-              // console.log('autre date '+newAutreDate.getTime());
-              
-              // var dif = t1.getHours() - newAutreDate.getHours();
-              // console.log('diffff '+dif);
-              
-              
-              // let dateString = '20/4/2022 11:57:80';  
-              // let momentVariable = moment(dateString, 'MM-DD-YYYYHH:mm:ss');  
-              // let stringvalue = momentVariable.format('MM-DD-YYYYHH:mm:ss');   
-             
-              // let dateString = '2022-04-20T00:00:00' 
-              // let newDate = new Date(dateString);
-              // var diff2Date = Math.abs((newAutreDate.getTime() - newDate.getTime())/1000);
-              // console.log('test diff entre 2 date = '+diff2Date);
-              
-            } if(this.donneee[i].clockTime == 'leave on break'){
-              const dateLeaveOnBreak = this.donneee[i].timeClock;
-              console.log('date leave on break '+dateLeaveOnBreak);
-              
-           }if(this.donneee[i].clockTime == 'retrun from break'){
-               const dateReturnFromBreak = this.donneee[i].timeClock;
-               console.log('date return from break '+ this.donneee[i].timeClock)
-           }if(this.donneee[i].clockTime == 'clock out '){
-               const dateClockOut = this.donneee[i].timeClock;
-               console.log('date clock out '+dateClockOut);
                
-
-           }
+            if(this.donneee[i].clockTime == 'clock in'){              
+                  var dateClockIn = this.donneee[i].timeClock;              
+                   let dateClock = new Date(dateClockIn as string);
+                  dateIn = dateClock.getTime();
+            }
             
+            if(this.donneee[i].clockTime == 'leave on break'){                 
+                 let dateLeaveOnBreakString = this.donneee[i].timeClock;
+                 let dateLeaveOnBreak = new Date(dateLeaveOnBreakString as string);
+                 dateLeave = dateLeaveOnBreak.getTime();
+
+                 this.isTimeLeaveOnBreak = true;
+             }
+              if(this.donneee[i].clockTime == 'return from break'){                  
+                 let dateReturnFromBreakString = this.donneee[i].timeClock;
+                 let dateReturnFromBreak = new Date(dateReturnFromBreakString as string);
+                 dateReturn = dateReturnFromBreak.getTime();
+                 this.isTimeReturnFromBreak = true;
+              } 
+              
+              if(this.donneee[i].clockTime == 'clock out'){
+                  let  dateClockOutString = this.donneee[i].timeClock;
+                  let dateClockOut = new Date(dateClockOutString as string);
+                   dateOut = dateClockOut.getTime();
+           }
+           
          }
      }
+      if(this.isTimeLeaveOnBreak && this.isTimeReturnFromBreak){
+        let  diffTimeBreak = dateReturn - dateLeave;
+        let diffTimeIO = dateOut - dateIn;
+        let totalDiff =  diffTimeBreak+diffTimeIO;
+        this.timeWorkedDetail = this.timeConversion(totalDiff);
+      }else{
+        let diffTimeIO = dateOut - dateIn;
+        this.timeWorkedDetail = this.timeConversion(diffTimeIO);
+        
+      
+      }
   }
-  convertStringToDate(dateString: string): Date{
-       let dateSplit = dateString.replace('/','-');    
-       let dateNoSpace = dateSplit.replace(' ','T');
-       let dateFormat = new Date(dateNoSpace); 
-       return dateFormat
-  }
+
+  timeConversion(duration: number) {
+    const portions: string[] = [];
+  
+    const msInHour = 1000 * 60 * 60;
+    const hours = Math.trunc(duration / msInHour);
+    if (hours > 0) {
+      portions.push(hours + 'h');
+      duration = duration - (hours * msInHour);
+    }
+
+    const msInMinute = 1000 * 60;
+    const minutes = Math.trunc(duration / msInMinute);
+    if (minutes > 0) {
+      portions.push(minutes + 'm');
+      duration = duration - (minutes * msInMinute);
+    }
+  
+    const seconds = Math.trunc(duration / 1000);
+    if (seconds > 0) {
+      portions.push(seconds + 's');
+    }
+  
+    return portions.join(' ');
+  } 
 
 }
