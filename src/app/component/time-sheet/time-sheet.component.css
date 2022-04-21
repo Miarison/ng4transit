@@ -1,0 +1,49 @@
+p{
+    color: black;
+    text-align: center;
+}
+.body-principal{
+    margin-left: 30%;
+    background-color: hsl(0, 0%, 95%);
+     margin-top: 5%;
+}
+.margin-clock{
+    margin-left: 90px;
+}
+#clockInMarge{
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+#clockIn{
+    background-color: #02853470;
+}
+#clockInSpan{
+    color: black;
+    font-size: x-small;
+}
+#clockOut{
+    background-color: rgba(2, 75, 97, 0.849);
+     margin-left: 4%;
+}
+#clockOutSpan{
+    color:black;
+    font-size: x-small;
+}
+.margeLeave{
+    display: flex; 
+    align-items: center;
+    margin-top: 4%;
+}
+.textSpan{
+    color: black;
+    font-size: xx-small;
+}
+#leaveOnBreak{
+    background-color: hsl(357, 97%, 46%);
+}
+#returnFromBreak{
+    background-color: white; margin-left: 4%;
+    padding: 0px;height: 35px;
+    text-align: center;
+}

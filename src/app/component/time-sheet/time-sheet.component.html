@@ -19,21 +19,21 @@
                     </option>
                 </select>
             </div>
-            <div class="content-block" style="margin-left: 90px;">
-                <div  style="display: flex; align-items: center; text-align: center;">
-                    <div class="col-md-4 " id="clockIn" style="background-color: #02853470;" (click) ="getTimeSheet('clock in')">
-                        <span style="color: black; font-size: x-small; ">CLOCK IN</span>
+             <div class="content-block margin-clock">
+                <div  id="clockInMarge">
+                    <div class="col-md-4 " id="clockIn" (click) ="getTimeSheet('clock in')">
+                        <span id="clockInSpan">CLOCK IN</span>
                     </div>
-                    <div class="col-md-4 clock"  id="clockOut" style="background-color: rgba(2, 75, 97, 0.849); margin-left: 4%;"(click) ="getTimeSheet('clock out')">
-                        <span style="color:black; font-size: x-small;">CLOCK OUT</span>
+                    <div class="col-md-4 clock"  id="clockOut" (click) ="getTimeSheet('clock out')">
+                        <span id="clockOutSpan" >CLOCK OUT</span>
                     </div>
                 </div>
-                <div  style="display: flex; align-items: center;margin-top: 4%;">
-                    <div class="col-md-4 clock"  id="leaveOnBreak" style="background-color: hsl(357, 97%, 46%);" (click) ="getTimeSheet('leave on break')">
-                        <span style="color: black; font-size: xx-small;">LEAVE ON BREAK</span>
+                <div  class="margeLeave">
+                    <div class="col-md-4 clock"  id="leaveOnBreak"  (click) ="getTimeSheet('leave on break')">
+                        <span  class="textSpan" >LEAVE ON BREAK</span>
                     </div>
-                    <div class="col-md-4 clock"  id="returnFromBreak" style="background-color: white; margin-left: 4%; padding: 0px;height: 35px;text-align: center;" (click) ="getTimeSheet('return from break')">
-                        <span style="color:black;font-size: xx-small;">RETURN FROM BREAK</span>
+                    <div class="col-md-4 clock"  id="returnFromBreak"  (click) ="getTimeSheet('return from break')">
+                        <span class="textSpan">RETURN FROM BREAK</span>
                     </div>
                 </div>
             </div>
