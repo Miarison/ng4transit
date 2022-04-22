@@ -19,8 +19,11 @@ export class TimeSheetComponent implements OnInit {
   timeSheet : TimeLock[] = [];
   dataClockTime: any = [];
   timeClock = new TimeLock();
+  clockInClicked = false;
   public object = Task;
-  constructor(private timeSheetService: AuthenticationService) { 
+  messsageClockInError:string = '';
+
+  constructor(private authenficationService: AuthenticationService,private timeSheetService: TimeSheetComponent) { 
          
   }
   ngOnInit(): void {
@@ -37,45 +40,72 @@ export class TimeSheetComponent implements OnInit {
   
    getTimeSheet(elementDiv: string){
      const timeSheetdata = new SigninModel((this.timeSheetForm.get('email')).value,(this.timeSheetForm.get('password').value));
-     this.timeSheetService.authenticate(timeSheetdata).subscribe(
+     this.authenficationService.authenticate(timeSheetdata).subscribe(
        (res: any) => {
-          var result= JSON.stringify(res);
-          var jsonn  = JSON.parse(result);
-          let name = jsonn.data.firstname;
-          const maDate: Date = new Date();
-          let dateko = maDate.getDate() + '/' + (( maDate.getMonth() + 1)) + '/' + maDate.getFullYear()+ ' ' + maDate.getHours() + ':' + maDate.getMinutes()+ ':' + maDate.getSeconds();
-          let dateTime = new Date(dateko);
-          //get element in div 
-          const clockIn = document.getElementById('clockIn')?.innerText.toLowerCase();                
-          const clockOut = document.getElementById('clockOut')?.innerText.toLowerCase();
-          const leaveOnBreak = document.getElementById('leaveOnBreak')?.innerText.toLowerCase();
-          const returnFromBreak = document.getElementById('returnFromBreak')?.innerText.toLowerCase();
-          
-          if(clockIn as string == elementDiv){
-              let clock = clockIn as string;
-              this.timeClock = new TimeLock(name, clock,dateko);
-            }if(clockOut as string  == elementDiv){
-              let clock_out = clockOut as string;
-              this.timeClock = new TimeLock(name,clock_out,dateko);
-          }if(leaveOnBreak as string  == elementDiv){
-              let leave_on_break = leaveOnBreak as string;
-              this.timeClock = new TimeLock(name, leave_on_break,dateko);
-          }if(returnFromBreak as string == elementDiv){
-              let returnFrom_break = returnFromBreak as string;
-              this.timeClock = new TimeLock(name, returnFrom_break,dateko);
-          }
-          this.dataClock.push(this.timeClock);
+        var result= JSON.stringify(res);
+        var jsonn  = JSON.parse(result);
+        let name = jsonn.data.firstname;
+        const maDate: Date = new Date();
+        let dateko = maDate.getFullYear() + '-' + (( maDate.getMonth() + 1)) + '-' +maDate.getDate() + ' ' + maDate.getHours() + ':' + maDate.getMinutes()+ ':' + maDate.getSeconds();
+        let dateTime = new Date(dateko);
+        //get element in div 
+        const clockIn = document.getElementById('clockIn')?.innerText.toLowerCase();                
+        const clockOut = document.getElementById('clockOut')?.innerText.toLowerCase();
+        const leaveOnBreak = document.getElementById('leaveOnBreak')?.innerText.toLowerCase();
+        const returnFromBreak = document.getElementById('returnFromBreak')?.innerText.toLowerCase();
+        
+        if(maDate && elementDiv !== 'clock in' && !this.verifyNameIsClockIn(name)){
+            this.clockInClicked = true;
+            this.messsageClockInError =  "please! check  'CLOCK IN' in  first ";
+            this.timeSheetForm.reset();
+            throw new Error(this.messsageClockInError);
+        }
+        if(clockIn as string == elementDiv){
+            let clock = clockIn as string;
+            this.timeClock = new TimeLock(name, clock,dateko);
+        }
 
-          const jsonData = JSON.stringify(this.dataClock);
-          localStorage.setItem('time',jsonData);
-          this.timeSheetForm.reset();
-          },
-           (error: any) => {
-               console.log(error);
-          }
-     );
-   }
+        if(clockOut as string  == elementDiv){
+            let clock_out = clockOut as string;
+            this.timeClock = new TimeLock(name,clock_out,dateko);
+        }
 
+        if(leaveOnBreak as string  == elementDiv){
+            let leave_on_break = leaveOnBreak as string;
+            this.timeClock = new TimeLock(name, leave_on_break,dateko);
+        }
+        
+        if(returnFromBreak as string == elementDiv){
+            let returnFrom_break = returnFromBreak as string;
+            this.timeClock = new TimeLock(name, returnFrom_break,dateko);
+        }
+
+        this.dataClock.push(this.timeClock);
+        let dataJSON = JSON.stringify(this.dataClock);
+        localStorage.setItem('time',dataJSON);
+        this.timeSheetForm.reset();
+        },
+         (error: any) => {
+             throw error;
+        }
+   );
+ }
+ verifyNameIsClockIn(name: string): boolean{
+   let isNameClicked = false;
+   let dataTimeSheet: any = [];
+   let results: TimeLock [] = [];
+       dataTimeSheet.push(localStorage.getItem('time') || '{}');
+   var dataParsed = JSON.parse(dataTimeSheet);
+     dataParsed.forEach((element: any) => {
+            results.push(element);
+     });
+     for(let timeClock of results ){
+         if(timeClock.name === name){
+              isNameClicked = true
+         }
+     }
+     return isNameClicked;
+ }
 
 
 }

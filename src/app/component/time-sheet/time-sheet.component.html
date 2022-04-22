@@ -19,6 +19,9 @@
                     </option>
                 </select>
             </div>
+            <div *ngIf="clockInClicked" class="login-message alert alert-danger text-error-center" role="alert">
+                {{messsageClockInError}} 
+             </div>
                <div class="content-block margin-clock">
                 <div  id="clockInMarge">
                     <div class="col-md-5 " id="clockIn" (click) ="getTimeSheet('clock in')">

@@ -16,7 +16,9 @@ export class ClockTimeComponent implements OnInit {
   timeWorkedDetail: any;
   isDetailComponent = false;
   isNameClicked = true;
-  isClockIn = false;
+  isTimeLeaveOnBreak = false;
+  isTimeReturnFromBreak = false;
+  isTimeClockOut = false;
   constructor() {
    }
 
@@ -35,71 +37,72 @@ export class ClockTimeComponent implements OnInit {
     
   }
   getListTimeSheetGroupByName(){
-      for(let i = 0; i < this.donneee.length ; i++ ){
-          if(this.donneee[i].clockTime == 'clock in'){
-             this.data.push(new TimeLock(this.donneee[i].name,this.donneee[i].clockTime,this.donneee[i].timeClock));
-          }else if(this.donneee[i].clockTime == 'leave on break' || this.donneee[i].clockTime == 'return from break'  || this.donneee[i].clockTime == 'clock out'){
+      for(let timeSheet of this.donneee ){
+          if( timeSheet.clockTime == 'clock in'){
+             this.data.push(new TimeLock(timeSheet.name,timeSheet.clockTime,timeSheet.timeClock));
+          }else if(timeSheet.clockTime == 'leave on break' || timeSheet.clockTime == 'return from break'  || timeSheet.clockTime == 'clock out'){
             this.data.push();
           }
       }
       return this.data;
    }
-   getDetailClockTimeByName(name?:string){
+  getDetailClockTimeByName(name?:string){
     let dateIn: any;
     let dateOut: any;
     let dateLeave: any;
     let dateReturn: any;
-    
-    for(let i = 0; i <this.donneee.length; i++){          
-         if(this.donneee[i].name === name ){
 
+    for(let timeClock of this.donneee){         
+
+         if( timeClock.name === name ){
             this.name = name;
             this.isDetailComponent = true;
             this.isNameClicked = false;
-            this.detailClockTime.push(new TimeLock(this.donneee[i].name,this.donneee[i].clockTime,this.donneee[i].timeClock));
+            this.detailClockTime.push(new TimeLock(timeClock.name,timeClock.clockTime,timeClock.timeClock));
                
-            if(this.donneee[i].clockTime == 'clock in'){              
-                  var dateClockIn = this.donneee[i].timeClock;              
-                   let dateClock = new Date(dateClockIn as string);
+            if(timeClock.clockTime == 'clock in'){              
+                  var dateClockIn = timeClock.timeClock;              
+                  let dateClock = new Date(dateClockIn as string);
                   dateIn = dateClock.getTime();
             }
             
-            if(this.donneee[i].clockTime == 'leave on break'){                 
-                 let dateLeaveOnBreakString = this.donneee[i].timeClock;
+            if(timeClock.clockTime == 'leave on break'){                 
+                 let dateLeaveOnBreakString = timeClock.timeClock;
                  let dateLeaveOnBreak = new Date(dateLeaveOnBreakString as string);
                  dateLeave = dateLeaveOnBreak.getTime();
 
                  this.isTimeLeaveOnBreak = true;
              }
-              if(this.donneee[i].clockTime == 'return from break'){                  
-                 let dateReturnFromBreakString = this.donneee[i].timeClock;
+              if(timeClock.clockTime == 'return from break'){                  
+                 let dateReturnFromBreakString = timeClock.timeClock;
                  let dateReturnFromBreak = new Date(dateReturnFromBreakString as string);
                  dateReturn = dateReturnFromBreak.getTime();
                  this.isTimeReturnFromBreak = true;
               } 
               
-              if(this.donneee[i].clockTime == 'clock out'){
-                  let  dateClockOutString = this.donneee[i].timeClock;
+              if(timeClock.clockTime == 'clock out'){
+                  let  dateClockOutString = timeClock.timeClock;
                   let dateClockOut = new Date(dateClockOutString as string);
-                   dateOut = dateClockOut.getTime();
+                  dateOut = dateClockOut.getTime();
+                  this.isTimeClockOut = true;
            }
            
          }
      }
       if(this.isTimeLeaveOnBreak && this.isTimeReturnFromBreak){
-        let  diffTimeBreak = dateReturn - dateLeave;
+
+        let diffTimeBreak = dateReturn - dateLeave;
         let diffTimeIO = dateOut - dateIn;
         let totalDiff =  diffTimeBreak+diffTimeIO;
         this.timeWorkedDetail = this.timeConversion(totalDiff);
-      }else{
-        let diffTimeIO = dateOut - dateIn;
-        this.timeWorkedDetail = this.timeConversion(diffTimeIO);
-        
-      
+      }
+      else { 
+        let diffTimeIO = dateOut - dateIn;        
+        this.timeWorkedDetail = this.timeConversion(diffTimeIO);      
       }
   }
-
-  timeConversion(duration: number) {
+ 
+   timeConversion(duration: number) {
     const portions: string[] = [];
   
     const msInHour = 1000 * 60 * 60;
